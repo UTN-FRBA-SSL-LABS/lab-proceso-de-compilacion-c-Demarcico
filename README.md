@@ -346,11 +346,11 @@ Todos son correctos. Lo importante no es el número exacto sino que sea **varios
 **P1.** Ejecutá `wc -l programa.i` y escribí el número de líneas que obtenés.
 
 <!-- Completá la línea siguiente con el número exacto (solo dígitos, sin espacios): -->
-LINEAS_I=
+LINEAS_I=821
 
 ¿Por qué ese número es tan mayor que las 94 líneas de `programa.c`?
 
-> **R:**
+> **R: Es porque el preprocesador copia y pega todo el contenido de los archivos de biblioteca stdio.h y stdlib.h adentro del código.**
 
 ---
 
@@ -389,11 +389,11 @@ grep "Archivo fuente principal" programa.i   # no debe encontrar nada
 ¿El comando encuentra algo o no devuelve nada?
 
 <!-- Completá con SI (si encontró algo) o NO (si no encontró nada): -->
-COMENTARIOS_EN_I=
+COMENTARIOS_EN_I=NO
 
 ¿Por qué ocurre eso?
 
-> **R:**
+> **R: Es porque el preprocesador elimina todos los comentarios para dejar el código limpio antes de compilarlo.**
 
 ---
 
@@ -422,24 +422,24 @@ Nótese que `CUADRADO(5)` se expande a `((5) * (5))`, con los paréntesis extra 
 
 **P3.** Ejecutá `grep -n "CUADRADO" programa.i` y copiá la salida completa.
 
-> **R:**
+> **R:790:    printf("CUADRADO(%d)      = %d\n", 5, ((5) * (5)));**
 
 ¿El nombre `CUADRADO` aparece tal cual en `programa.i`, o fue reemplazado
 por otra cosa? Respondé SI o NO:
 
 <!-- Completá con SI o NO: -->
-CUADRADO_EN_I=
+CUADRADO_EN_I=NO
 
 ---
 
 **P4.** Ejecutá `grep -n '"1\.0"' programa.i` y copiá la línea encontrada.
 
-> **R:**
+> **R: 781:    printf("=== Laboratorio de Compilacion en C (v%s) ===\n\n", "1.0");**
 
 ¿Cuál era el nombre de la macro en `programa.c` que fue reemplazada por `"1.0"`?
 
 <!-- Completá con el nombre exacto de la macro (en mayúsculas, como está en el fuente): -->
-NOMBRE_MACRO_VERSION=
+NOMBRE_MACRO_VERSION=VERSION
 
 ---
 
@@ -475,13 +475,13 @@ gcc -E programa.c | grep "Iniciando"
 gcc -E -DDEBUG programa.c | grep "Iniciando"
 ```
 
-> **R:**
+> **R: Con comando normal: (No devuelve nada) .Con -DDEBUG: printf("[DEBUG] %s\n", ("Iniciando main"));**
 
 ¿Agregar `-DDEBUG` hace que aparezca código nuevo en el `.i` que antes no estaba?
 Respondé SI o NO:
 
 <!-- Completá con SI o NO: -->
-DEBUG_ACTIVA_CODIGO=
+DEBUG_ACTIVA_CODIGO=SI
 
 ---
 
@@ -504,7 +504,7 @@ grep -n "stdio.h" programa.i | head -5
 
 ¿Qué información comunican esas líneas `# N "archivo"`? ¿De qué archivo proviene el bloque que contiene la declaración de `printf`?
 
-> **R:**
+> **R:Estas líneas dicen el número de línea original y el nombre del archivo de donde proviene el código que sigue. El compilador las utiliza para que, si hubiera error,estas puedan informarte la ubicación exacta en tu archivo original (.c o .h) y no en el archivo preprocesado (.i). La declaración de printf proviene del archivo de cabecera stdio.h.**
 
 ---
 
@@ -660,26 +660,26 @@ Aparecen como instrucciones de llamada (por ejemplo `bl _area_circulo`), pero **
 
 **P7.** Ejecutá `grep "area_circulo" programa.s` y copiá la salida.
 
-> **R:**
+> **R: .call    area_circulo**
 
 ¿`area_circulo` aparece como una función *definida* en `programa.s`
 (con su propio bloque de instrucciones) o solo como una *llamada* (instrucción sin cuerpo)?
 Respondé DEFINIDA o LLAMADA:
 
 <!-- Completá con DEFINIDA o LLAMADA: -->
-AREA_EN_S=
+AREA_EN_S= LLAMADA
 
 ---
 
 **P8.** Encontrá en `programa.s` la etiqueta `sumar:` o `_sumar:` y copiá
 las primeras 4 líneas de instrucciones que le siguen.
 
-> **R:**
+> **R:pushq   %rbp .seh_pushreg   %rbp movq    %rsp, %rbp .seh_setframe   %rbp, 0**
 
 Explicá en términos generales qué hacen esas instrucciones
 (usá los comentarios del laboratorio como guía):
 
-> **R:**
+> **R: Estas instrucciones preparar la pila (stack): guardan la posición del programa anterior y reservan espacio de memoria exclusivo para que trabaje la función sumar.**
 
 ---
 
@@ -692,13 +692,13 @@ grep "llamadas" programa.s
 
 **P9.** Ejecutá `grep "llamadas" programa.s` y copiá la salida.
 
-> **R:**
+> **R: movl    llamadas(%rip), %eax**
 
 ¿Aparece la variable `llamadas` en el ensamblador?
 Respondé SI o NO:
 
 <!-- Completá con SI o NO: -->
-LLAMADAS_EN_S=
+LLAMADAS_EN_S=SI
 
 ---
 
